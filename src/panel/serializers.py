@@ -7,9 +7,9 @@ class MessageSerializer(serializers.Serializer):
     text = serializers.CharField(max_length=300)
     priority = serializers.ChoiceField(
         (
+            ('high', 'high'),
             ('default', 'default'),
             ('low', 'low'),
-            ('high', 'high'),
         ),
         default='low'
     )

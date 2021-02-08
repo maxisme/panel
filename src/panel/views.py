@@ -5,15 +5,16 @@ from rest_framework.decorators import api_view
 from panel.message import show_message
 from panel.serializers import MessageSerializer
 
-
 @api_view(['POST'])
 def message_view(request):
     if request.method == "POST":
         message = MessageSerializer(data=request.data)
         message.is_valid(raise_exception=True)
 
-        queue = django_rq.get_queue(message.validated_data['priority'])
-        queue.enqueue(show_message, text=message.validated_data['text'])
+        priority = message.validated_data['priority']
+        text = message.validated_data['text']
+
+        django_rq.get_queue(priority).enqueue(show_message, text=text)
         return HttpResponse("Your response")
 
     return HttpResponseNotFound()
