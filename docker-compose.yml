@@ -2,8 +2,7 @@ version: '3.1'
 services:
   panel:
     container_name: panel
-    build:
-      context: .
+    image: maxisme/panel
     command: python manage.py runserver 0.0.0.0:8000
     #command: daphne -b 0.0.0.0 -p 8000 panel.asgi:application
     volumes:
@@ -15,8 +14,7 @@ services:
       - 8000:8000
   worker:
     container_name: worker
-    build:
-      context: .
+    image: maxisme/panel
     command: python manage.py rqworker high default low
     volumes:
       - '/lib/modules:/lib/modules'
