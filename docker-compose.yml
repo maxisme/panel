@@ -1,0 +1,30 @@
+version: '3.1'
+services:
+  panel:
+    container_name: panel
+    build:
+      context: .
+    command: python manage.py runserver 0.0.0.0:8000
+    #command: daphne -b 0.0.0.0 -p 8000 panel.asgi:application
+    volumes:
+    - "./src:/app/src"
+    depends_on:
+      - redis
+      - worker
+    ports:
+      - 8000:8000
+  worker:
+    container_name: worker
+    build:
+      context: .
+    command: python manage.py rqworker high default low
+    volumes:
+      - '/lib/modules:/lib/modules'
+      - '/sys:/sys'
+    devices:
+      - '/dev/ttyAMA0:/dev/ttyAMA0'
+      - '/dev/mem:/dev/mem'
+    privileged: true
+
+  redis:
+    image: redis
