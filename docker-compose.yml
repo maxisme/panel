@@ -1,0 +1,53 @@
+version: '3.1'
+services:
+  panel:
+    container_name: panel
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    restart: always
+    volumes:
+      - "./src:/app"
+    depends_on:
+      - redis
+      - worker
+      - cloudflared
+    ports:
+      - 8080:8080
+
+  worker:
+    container_name: worker
+    build: .
+    command: python manage.py rqworker high default low
+    restart: always
+    volumes:
+      - '/lib/modules:/lib/modules'
+      - '/sys:/sys'
+      - "./src:/app"
+    devices:
+      - '/dev/ttyAMA0:/dev/ttyAMA0'
+      - '/dev/mem:/dev/mem'
+    privileged: true
+
+  cloudflared:
+    container_name: tunnel
+    image: erisamoe/cloudflared:2021.11.0
+    restart: always
+    volumes:
+      - ~/.cloudflared:/etc/cloudflared
+    command: tunnel run --url=http://panel:8080 panel
+
+  lint:
+    build: .
+    command: ./lint.sh
+    volumes:
+      - "./src:/app/"
+
+  format:
+    build: .
+    command: ./format.sh
+    volumes:
+      - "./src:/app/"
+
+  redis:
+    image: redis
+    restart: always
