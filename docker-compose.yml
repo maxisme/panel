@@ -6,7 +6,7 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     #command: daphne -b 0.0.0.0 -p 8000 panel.asgi:application
     volumes:
-    - "./src:/app"
+      - "./src:/app"
     depends_on:
       - redis
       - worker
@@ -19,6 +19,7 @@ services:
     volumes:
       - '/lib/modules:/lib/modules'
       - '/sys:/sys'
+      - "./src:/app"
     devices:
       - '/dev/ttyAMA0:/dev/ttyAMA0'
       - '/dev/mem:/dev/mem'
