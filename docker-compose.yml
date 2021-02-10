@@ -4,7 +4,7 @@ services:
     container_name: panel
     image: maxisme/panel
     command: python manage.py runserver 0.0.0.0:8000
-    #command: daphne -b 0.0.0.0 -p 8000 panel.asgi:application
+    restart: always
     volumes:
       - "./src:/app"
     depends_on:
@@ -16,6 +16,7 @@ services:
     container_name: worker
     image: maxisme/panel
     command: python manage.py rqworker high default low
+    restart: always
     volumes:
       - '/lib/modules:/lib/modules'
       - '/sys:/sys'
@@ -27,3 +28,4 @@ services:
 
   redis:
     image: redis
+    restart: always

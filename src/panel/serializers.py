@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from rest_framework import serializers
 
 
@@ -13,3 +11,5 @@ class MessageSerializer(serializers.Serializer):
         ),
         default='low'
     )
+    slide = serializers.BooleanField(default=True)
+    timeout = serializers.IntegerField(default=10)
