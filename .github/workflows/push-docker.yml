@@ -52,7 +52,7 @@ jobs:
 
           # deploy helm
           repo_name=$(echo "${{ github.repository }}" | sed 's:.*/::')
-          helm upgrade "${repo_name//./}" maxisme/web -f helm-values.yml --set="image.tag=sha-${GITHUB_SHA::7}" --atomic --timeout 120s
+          helm upgrade "${repo_name//./}" maxisme/web -f helm-values.yml --set="image.tag=sha-${GITHUB_SHA::7}" --set="container[0].image=maxisme/panel:sha-${GITHUB_SHA::7}" --atomic --timeout 120s
 
           # clean up
           rm ~/.kube/config

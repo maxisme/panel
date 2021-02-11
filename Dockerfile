@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM maxisme/panel:latest
 RUN apt-get update && apt-get install -y build-essential libfreetype6-dev libjpeg-dev libopenjp2-7 libtiff5 libffi-dev
 
 WORKDIR /app

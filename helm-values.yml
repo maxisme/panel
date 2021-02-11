@@ -3,7 +3,7 @@ ingress:
 
 image:
   repository: "maxisme/panel"
-  tag: "sha-9adb4f9"
+  tag: "latest"
   command: "python3"
   args:
     - "manage.py"
