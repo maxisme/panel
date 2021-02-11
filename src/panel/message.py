@@ -2,8 +2,7 @@ import time
 
 from luma.core.interface.serial import spi, noop
 from luma.core import legacy
-from luma.core.legacy import textsize
-from luma.core.legacy.font import proportional,  LCD_FONT, TINY_FONT, SEG7_FONT
+from luma.core.legacy.font import proportional, LCD_FONT, TINY_FONT, SEG7_FONT
 from luma.core.render import canvas
 from luma.led_matrix.device import max7219
 
@@ -15,8 +14,7 @@ SMALL_FONT = proportional(SEG7_FONT)
 DEFAULT_FONT = proportional(LCD_FONT)
 
 
-def show_message(text: str, should_slide: bool, timeout: int, font):
-
+def show_message(text: str, should_slide: bool, timeout: int, font: proportional):
     serial = spi(port=0, device=0, gpio=noop())
     device = max7219(
         serial,

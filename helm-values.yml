@@ -3,7 +3,7 @@ ingress:
 
 image:
   repository: "maxisme/panel"
-  tag: "latest"
+  tag: "sha-9adb4f9"
   command: "python3"
   args:
     - "manage.py"
@@ -34,8 +34,6 @@ autoscaling:
 
 nodeSelector: {"kubernetes.io/hostname": "pi1"}
 affinity: {}
-
-healthPath: ""
 
 volumes:
   - name: modules
