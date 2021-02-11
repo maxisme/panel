@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+MAX_LEN_WITHOUT_SLIDE = 10
 
 class MessageSerializer(serializers.Serializer):
     text = serializers.CharField(max_length=300)
@@ -11,5 +12,4 @@ class MessageSerializer(serializers.Serializer):
         ),
         default='low'
     )
-    slide = serializers.BooleanField(default=True)
-    timeout = serializers.IntegerField(default=10)
+    timeout = serializers.IntegerField(default=4)
