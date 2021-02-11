@@ -1,0 +1,61 @@
+ingress:
+  match: "Host(`panel.max.me.uk`)" # e.g Host(`localhost`) https://doc.traefik.io/traefik/routing/routers/
+
+image:
+  repository: "maxisme/panel"
+  tag: "latest"
+  command: "python3"
+  args:
+    - "manage.py"
+    - "runserver"
+    - "0.0.0.0:8080"
+
+envSecretRef: "panel"
+
+container:
+  - name: "worker"
+    image: "maxisme/panel:latest"
+    imagePullPolicy: IfNotPresent
+    command: ["python3"]
+    args:
+      - "manage.py"
+      - "rqworker"
+      - "high"
+      - "default"
+      - "low"
+    securityContext:
+      privileged: true
+    envFrom:
+      - secretRef:
+          name: "panel"
+
+autoscaling:
+  minReplicas: 1
+
+nodeSelector: {"kubernetes.io/hostname": "pi1"}
+affinity: {}
+
+healthPath: ""
+
+volumes:
+  - name: modules
+    hostPath:
+      path: '/lib/modules'
+  - name: sys
+    hostPath:
+      path: '/sys'
+  - name: ttyAMA0
+    hostPath:
+      path: '/dev/ttyAMA0'
+  - name: mem
+    hostPath:
+      path: '/dev/mem'
+volumeMounts:
+  - name: sys
+    mountPath: '/sys'
+  - name: modules
+    mountPath: '/lib/modules'
+  - name: ttyAMA0
+    mountPath: '/dev/ttyAMA0'
+  - name: mem
+    mountPath: '/dev/mem'
