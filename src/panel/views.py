@@ -1,12 +1,13 @@
 from django.http import HttpResponse, HttpResponseNotFound
 import django_rq
 from luma.core.legacy import textsize
-from rest_framework import serializers
+
 from rest_framework.decorators import api_view
 
-from panel.message import show_message, SMALL_FONT, MAX_WIDTH, DEFAULT_FONT
+from panel.message import show_message, MAX_WIDTH, DEFAULT_FONT
 from panel.serializers import MessageSerializer, MAX_LEN_WITHOUT_SLIDE
 
+import luma.core.legacy.font as f
 
 def health_view(request):
     return HttpResponse()
@@ -21,14 +22,19 @@ def message_view(request):
         priority = message.validated_data['priority']
         text = message.validated_data['text']
         timeout = message.validated_data['timeout']
+        font_arg = message.validated_data['font']
 
-        text_width = textsize(text, SMALL_FONT)[0]
+        # check font exists
+        try:
+            font = getattr(f, font_arg)
+            font = f.proportional(font)
+        except AttributeError:
+            font = DEFAULT_FONT
+
+        text_width = textsize(text, font)[0]
         should_slide = text_width > MAX_WIDTH
         if not should_slide:
-            font = SMALL_FONT
             print(f"Text is too large {text_width}/{MAX_WIDTH}")
-        else:
-            font = DEFAULT_FONT
 
         django_rq.get_queue(priority).enqueue(
             show_message,

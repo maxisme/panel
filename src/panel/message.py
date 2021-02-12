@@ -1,5 +1,4 @@
 import time
-
 from luma.core.interface.serial import spi, noop
 from luma.core import legacy
 from luma.core.legacy.font import proportional, LCD_FONT, TINY_FONT, SEG7_FONT
@@ -10,7 +9,6 @@ CASCADED = 4
 BLOCK_ORIENTATION = 90
 SCROLL_DELAY = 0.05
 MAX_WIDTH = 32
-SMALL_FONT = proportional(SEG7_FONT)
 DEFAULT_FONT = proportional(LCD_FONT)
 
 

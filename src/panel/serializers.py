@@ -13,3 +13,4 @@ class MessageSerializer(serializers.Serializer):
         default='low'
     )
     timeout = serializers.IntegerField(default=4)
+    font = serializers.CharField(default="LCD_FONT")
