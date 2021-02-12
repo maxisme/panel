@@ -1,7 +1,7 @@
 import time
 from luma.core.interface.serial import spi, noop
 from luma.core import legacy
-from luma.core.legacy.font import proportional, LCD_FONT, TINY_FONT, SEG7_FONT
+from luma.core.legacy.font import proportional, LCD_FONT
 from luma.core.render import canvas
 from luma.led_matrix.device import max7219
 
@@ -41,9 +41,4 @@ def show_message(text: str, should_slide: bool, timeout: int, font: proportional
 
         if timeout != 0:
             time.sleep(timeout)
-            with canvas(device) as draw:
-                legacy.text(
-                    draw=draw,
-                    xy=(0, 0),
-                    txt="",
-                )
+            device.clear()

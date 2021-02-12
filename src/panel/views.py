@@ -5,9 +5,10 @@ from luma.core.legacy import textsize
 from rest_framework.decorators import api_view
 
 from panel.message import show_message, MAX_WIDTH, DEFAULT_FONT
-from panel.serializers import MessageSerializer, MAX_LEN_WITHOUT_SLIDE
+from panel.serializers import MessageSerializer
 
 import luma.core.legacy.font as f
+
 
 def health_view(request):
     return HttpResponse()
