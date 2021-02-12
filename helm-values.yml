@@ -29,9 +29,6 @@ container:
       - secretRef:
           name: "panel"
 
-autoscaling:
-  minReplicas: 1
-
 nodeSelector: {"kubernetes.io/hostname": "pi1"}
 affinity: {}
 
