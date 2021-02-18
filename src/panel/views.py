@@ -1,3 +1,5 @@
+import logging
+
 from django.http import HttpResponse, HttpResponseNotFound
 import django_rq
 from luma.core.legacy import textsize
@@ -35,7 +37,7 @@ def message_view(request):
         text_width = textsize(text, font)[0]
         should_slide = text_width > MAX_WIDTH
         if should_slide:
-            print(f"Text is too large sliding... {text_width}/{MAX_WIDTH}")
+            logging.warning(f"Text is too large sliding... {text_width}/{MAX_WIDTH}")
 
         django_rq.get_queue(priority).enqueue(
             show_message,
