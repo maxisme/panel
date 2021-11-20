@@ -1,6 +1,8 @@
 # Panel
 Setup a HTTP API to write notifications to your LED matrix panel on Raspberry Pi.
 
+![](https://user-images.githubusercontent.com/16902919/142736756-118a5ae4-cbf7-43c8-b1f8-93c1ff9b3c98.gif)
+
 ## Hardware Setup
 What you will need:
  - Raspberry Pi
@@ -30,7 +32,7 @@ docker run -v ~/.cloudflared:/etc/cloudflared/ erisamoe/cloudflared:2021.11.0 tu
 where `example.com` is the domain you have hosted on cloudflare.
 
 ### Running
-After cloning this repo simply run:
+After cloning this repo on your Raspberry Pi simply run:
 ```
 $ docker-compose up -d panel
 ```
@@ -44,3 +46,8 @@ To send a message to the board simply make a POST request to `https://panel.exam
 | text      | string | The message you want to send. | Required |
 | font      | string |                               | LCD_FONT |
 | priority  | enum   | low, default, high            | default  |
+
+e.g with `curl`:
+```
+$ curl -X POST -d 'text=hello world' https://panel.example.com/
+```
