@@ -4,6 +4,7 @@ import django_rq
 import luma.core.legacy.font as luma_font
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect
 from luma.core.legacy import textsize
 from rest_framework.decorators import api_view
 
@@ -15,8 +16,11 @@ def health(request: HttpRequest) -> HttpResponse:
     return HttpResponse()
 
 
-@api_view(["POST"])
-def message_handler(request: HttpRequest) -> HttpResponse:
+@api_view(["GET", "POST"])  # type: ignore[misc]
+def handler(request: HttpRequest) -> HttpResponse:
+    if request.method == "GET":
+        return redirect("https://github.com/maxisme/panel")
+
     message = MessageSerializer(data=request.data)
     message.is_valid(raise_exception=True)
 
