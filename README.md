@@ -54,11 +54,18 @@ To send a message to the board simply make a POST request to `https://panel.exam
 
 | Parameter | Type   | Description                   | Default  |
 |-----------|--------|-------------------------------|----------|
-| text      | string | The message you want to send. | Required |
+| text      | string | The message you want to send. | N/A - Required |
 | font      | string |                               | LCD_FONT |
 | priority  | enum   | low, default, high            | default  |
+| display_time   | enum   | Number of seconds to show message (only if message doesn't wrap)            | 4  |
 
 e.g with `curl`:
 ```
 $ curl -X POST -d 'text=hello world' https://panel.example.com/
+```
+
+## Development
+### Lint
+```
+docker-compose up --build format
 ```

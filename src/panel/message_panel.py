@@ -8,7 +8,9 @@ from luma.core.render import canvas
 from luma.led_matrix.device import max7219
 
 
-def display_message(text: str, should_slide: bool, font: proportional) -> None:
+def display_message(
+    text: str, should_slide: bool, font: proportional, display_time: int
+) -> None:
     serial = spi(port=0, device=0, gpio=noop())
     device = max7219(
         serial,
@@ -31,5 +33,5 @@ def display_message(text: str, should_slide: bool, font: proportional) -> None:
                 font=font,
             )
 
-        time.sleep(settings.MESSAGE_DISPLAY_TIME)
+        time.sleep(display_time)
         device.clear()

@@ -27,6 +27,7 @@ def handler(request: HttpRequest) -> HttpResponse:
     priority = message.validated_data["priority"]
     text = message.validated_data["text"]
     font_arg = message.validated_data["font"]
+    display_time = message.validated_data["display_time"]
 
     # check font exists
     try:
@@ -50,6 +51,7 @@ def handler(request: HttpRequest) -> HttpResponse:
         text=text,
         should_slide=should_slide,
         font=font,
+        display_time=display_time,
     )
 
     return HttpResponse(f"Sent '{text}' with priority {priority}")
